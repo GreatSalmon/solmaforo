@@ -1,0 +1,38 @@
+#! /bin/sh
+# /etc/init.d/init_mqtt 
+
+### BEGIN INIT INFO
+# Provides:          init_mqtt
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Simple script to start a program at boot
+# Description:       A simple script from www.stuffaboutcode.com which will start / stop a program a boot / shutdown.
+### END INIT INFO
+
+# If you want a command to always run, put it here
+# if you want to remove this from startup, run:
+# sudo update-rc.d -f  NameOfYourScript remove
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting publisher"
+    # run application you want to start
+    /home/pi/mqtt/publisher.py 2>/home/pi/mqtt/errors.err &
+    ;;
+  stop)
+    echo "Stopping publisher"
+    # kill application you want to stop
+    killall publisher.py
+    ;;
+  *)
+    echo "Usage: /etc/init.d/init_mqtt {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+
+
