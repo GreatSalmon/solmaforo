@@ -21,7 +21,7 @@ Host = "broker.mqttdashboard.com"
 Port = 1883
 ClientId = "rascaberri"
 Topic = "home/test/ernestotest"
-LogFile = "/home/pi/mqtt/logs.log"
+LogFile = "logs.log"
 TimeBetweenMsgs = 3 * 60
 TimeConnected = 1 * 60
 KeepAlive = False
@@ -123,12 +123,23 @@ def GetTimeStampWithOffset(): #offset from UTC time, in hours
 
 	return timestamp, timeOffset
 
+def GetUVB(channel):
+	measurementCnt = 100
+	voltsMean = 0
+	for i in range(measurementCnt):
+		volts = mcpread.GetVolts(channel)
+		voltsMean += volts
+		time.sleep(0.01)
+
+	voltsMean = voltsMean/measurementCnt
+	return voltsMean
+
 
 def SendMessage():
 	mac, ip = GetAddresses()
 	
 	timestamp, timeOffset = GetTimeStampWithOffset() #offset from UTC time, in hours
-	data1 = mcpread.GetVolts(0)
+	data1 = GetUVB(channel=0)
 	data2 = random.randint(15,30)
 	msg = "%s; %s; %s; %s; %s; %s; %s" % (ip, mac, Location, timestamp, timeOffset, data1, data2)
 	dataSent = False
