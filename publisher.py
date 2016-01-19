@@ -165,7 +165,6 @@ def StartProgram():
 	try:
 		EternalLoop()
 	except Exception as e:
-		logging.error(traceback.format_exc())
 		Log("Uncaught error. Loop will restart. Details: " + str(traceback.format_exc()))
 		StartProgram()
 
