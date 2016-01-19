@@ -72,7 +72,7 @@ def GetAddresses():
 		Log(str(e))
 		try:
 			myMAC = open('/sys/class/net/wwan0/address').read().strip()
-			myIP = get_ip_address("eth0")
+			myIP = get_ip_address("ppp0")
 		except IOError as e:
 			Log(str(e))
 			myMAC = "No MAC"
