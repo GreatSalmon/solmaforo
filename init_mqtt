@@ -22,7 +22,7 @@ case "$1" in
     echo "Starting publisher"
     # run application you want to start
     /home/pi/solmaforo/publisher.py 1>>/home/pi/solmaforo/otherlog.log 2>>/home/pi/solmaforo/error.err &
-    # tail -f /home/pi/solmaforo/logs.log
+    tail -f /home/pi/solmaforo/logs.log
     ;;
   stop)
     echo "Stopping publisher"
