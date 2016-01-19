@@ -24,7 +24,7 @@ Topic = "home/test/ernestotest"
 LogFile = "/home/pi/solmaforo/logs.log"
 TimeBetweenMsgs = 3 * 60
 TimeConnected = 1 * 60
-KeepAlive = False
+KeepAlive = True
 #movistar
 #InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="12d1:1c23" USBINTERFACE="2" APN="web.tmovil.cl" APN_USER="web" APN_PASS="web"'
 #entel
