@@ -24,9 +24,10 @@ Topic = "home/test/ernestotest"
 LogFile = "/home/pi/solmaforo/logs.log"
 TimeBetweenMsgs = 3 * 60
 TimeConnected = 1 * 60
-KeepAlive = False
+KeepAlive = True
 #movistar
 #InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="12d1:1c23" USBINTERFACE="2" APN="web.tmovil.cl" APN_USER="web" APN_PASS="web"'
+
 #entel
 InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="12d1:1506" USBINTERFACE="0" APN="imovil.entelpcs.cl" APN_USER="web" APN_PASS="web"'
 
@@ -68,8 +69,8 @@ def GetAddresses():
 		myMAC = open('/sys/class/net/eth0/address').read().strip()
 		myIP = get_ip_address("ppp0")
 	except IOError as e:
-		myMAC = open('/sys/class/net/eth0/address').read().strip()
 		try:
+			myMAC = open('/sys/class/net/eth0/address').read().strip()
 			myIP = get_ip_address("eth0")
 		except IOError as e:
 			myIP = "No IP"
