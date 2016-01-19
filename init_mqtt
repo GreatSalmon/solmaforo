@@ -20,7 +20,7 @@ case "$1" in
   start)
     echo "Starting publisher"
     # run application you want to start
-    /home/pi/mqtt/publisher.py 2>/home/pi/mqtt/errors.err &
+    /home/pi/solmaforo/publisher.py 2>/home/pi/solmaforo/errors.err &
     ;;
   stop)
     echo "Stopping publisher"
