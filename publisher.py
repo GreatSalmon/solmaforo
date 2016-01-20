@@ -39,9 +39,10 @@ InetDisconnectionString = '/usr/bin/modem3g/sakis3g --sudo "disconnect"'
 
 
 def Log(msg):
+	print(msg)
 	with open(LogFile, "a") as logfile:
 		logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "; " + msg + "\n")
-	print(msg)
+	
 
 def DoInitialChecks():
 	if NumberOfMeasuresBetweenSends < 1:
@@ -159,6 +160,8 @@ def GetMeasurement():
 
 def SaveMeasurementToBuffer():
 	msg = GetMeasurement()
+	Log("Saving following line to buffer: ")
+	Log(msg)
 	with open(BufferFile, "a") as bufferfile:
 		bufferfile.write(msg + "\n")
 
@@ -166,6 +169,7 @@ def GetCountOfMessagesInBuffer():
 	with open(BufferFile) as f:
 		for i, l in enumerate(f):
 			pass
+	Log("Number of lines in buffer: " + str(i+1))
 	return i + 1
 
 def DeleteBufferFile():
@@ -191,12 +195,14 @@ def SendFirstMessage():
 	DeleteBufferFile()
 	if not KeepAlive:
 		DisconnectFromInternet()
+	Log("End first message")
 
 def EternalLoop():
 	while True:
 		ConnectToInternet()
 		SaveMeasurementToBuffer()
 		if GetCountOfMessagesInBuffer() >= NumberOfMeasuresBetweenSends:
+			Log("Sending messages in buffer")
 			SendMessagesInBuffer()
 			DeleteBufferFile()
 			if not KeepAlive:
