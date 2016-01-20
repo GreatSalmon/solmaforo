@@ -15,9 +15,12 @@ import struct
 
 import urllib2
 
+#test line
+#publish.single("home/test/ernestotest", "hello test",qos=0, hostname="broker.mqttdashboard.com", port=1883, client_id="rascaberri")
+
 #params
 Location = "USACH"
-Host = "broker.mqttdashboard.com"
+Host = "212.72.74.21" # corresponds to "broker.mqttdashboard.com"
 Port = 1883
 ClientId = "rascaberri"
 Topic = "home/test/ernestotest"
@@ -96,6 +99,7 @@ def SendData(msg):
 	Log("Sending Message: " + msg)
 	try:
 		publish.single(Topic, msg,qos=0, hostname=Host, port=Port, client_id=ClientId)
+
 		Log("Message sent")
 		success = True	
 	except Exception as e:
