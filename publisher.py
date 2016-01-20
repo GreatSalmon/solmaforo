@@ -172,28 +172,23 @@ def DeleteBufferFile():
 	with open(BufferFile, "w"):
 		pass
 
-def SendMessage(msg):
-	dataSent = False
-	while not dataSent:
-		dataSent = SendData(msg)
-		time.sleep(5)
 
 def SendMessagesInBuffer():
-	dataSent = False
 	msgs = ""
 	with open(BufferFile, 'r') as bufferfile:
 		msgs = bufferfile.read()
-
+	dataSent = SendData()
 	while not dataSent:
 		dataSent = SendData()
+		ConnectToInternet()
 		time.sleep(5)
-	
 
 
 def SendFirstMessage():
 	ConnectToInternet()
-	msg = GetMeasurement()
-	SendMessage(msg)
+	SaveMeasurementToBuffer()
+	SendMessagesInBuffer()
+	DeleteBufferFile()
 	if not KeepAlive:
 		DisconnectFromInternet()
 
