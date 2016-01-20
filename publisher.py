@@ -181,9 +181,9 @@ def SendMessagesInBuffer():
 	msgs = ""
 	with open(BufferFile, 'r') as bufferfile:
 		msgs = bufferfile.read()
-	dataSent = SendData()
+	dataSent = SendData(msgs)
 	while not dataSent:
-		dataSent = SendData()
+		dataSent = SendData(msgs)
 		ConnectToInternet()
 		time.sleep(5)
 
