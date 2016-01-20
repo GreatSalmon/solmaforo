@@ -15,29 +15,38 @@ import struct
 
 import urllib2
 
-
+#params
 Location = "USACH"
 Host = "broker.mqttdashboard.com"
 Port = 1883
 ClientId = "rascaberri"
 Topic = "home/test/ernestotest"
-LogFile = "/home/pi/solmaforo/logs.log"
-TimeBetweenMsgs = 3 * 60
-TimeConnected = 1 * 60
-KeepAlive = True
+LogFile = "/home/pi/solmaforo_logs/logs.log"
+TimeBetweenMeasure = 3 * 60
+NumberOfMeasuresBetweenSends = 2 # Must be Integer >= 1
+TimeConnectedAfterSend = 1 * 60
+KeepAlive = False
 #movistar
 #InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="12d1:1c23" USBINTERFACE="2" APN="web.tmovil.cl" APN_USER="web" APN_PASS="web"'
 
 #entel
 InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="12d1:1506" USBINTERFACE="0" APN="imovil.entelpcs.cl" APN_USER="web" APN_PASS="web"'
-
 InetDisconnectionString = '/usr/bin/modem3g/sakis3g --sudo "disconnect"'
+# end params
+
+# Global Variables
 
 
 def Log(msg):
 	with open(LogFile, "a") as logfile:
 		logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "; " + msg + "\n")
 	print(msg)
+
+def DoInitialChecks():
+	if NumberOfMeasuresBetweenSends < 1:
+		raise "NumberOfMeasuresBetweenSends must be equal or greater than 1"
+	if TimeConnectedAfterSend >= TimeBetweenMeasure:
+		raise "TimeConnectedAfterSend must be less than TimeBetweenMeasure"
 
 # Checks internet connection by pinging a fast address (google)
 # Must find another way if this consumes to much data
@@ -139,30 +148,51 @@ def GetUVB(channel):
 	return voltsMean
 
 
-def SendMessage():
-	mac, ip = GetAddresses()
-	
+def GetMeasurement():
+	mac, ip = GetAddresses()	
 	timestamp, timeOffset = GetTimeStampWithOffset() #offset from UTC time, in hours
 	data1 = GetUVB(channel=0)
 	data2 = random.randint(15,30)
 	msg = "%s; %s; %s; %s; %s; %s; %s" % (ip, mac, Location, timestamp, timeOffset, data1, data2)
+	return msg
+
+def SaveMeasurementToBuffer():
+	msg = GetMeasurement()
+	# TODO
+
+def SendMessage(msg):
 	dataSent = False
 	while not dataSent:
 		dataSent = SendData(msg)
 		time.sleep(5)
 
+def SendFirstMessage():
+	ConnectToInternet()
+	msg = GetMeasurement()
+	SendMessage(msg)
+	if not KeepAlive:
+		DisconnectFromInternet()
 
 def EternalLoop():
 	while True:
 		ConnectToInternet()
-		SendMessage()
-		time.sleep(TimeConnected)
-		if not KeepAlive:
-			DisconnectFromInternet()
-		time.sleep(TimeBetweenMsgs - TimeConnected)
+		SaveMeasurementToBuffer()
+		if GetCountOfMessagesInBuffer >= NumberOfMeasuresBetweenSends:
+			SendMessages()
+			if not KeepAlive:
+				time.sleep(TimeConnectedAfterSend)
+				DisconnectFromInternet()
+		if KeepAlive:
+			time.sleep(TimeBetweenMeasure)
+		else:
+			time.sleep(TimeBetweenMeasure-TimeConnectedAfterSend)
+
 
 def StartProgram():
+	DoInitialChecks()
 	try:
+		SendFirstMessage()
+		time.sleep(TimeBetweenMeasure)
 		EternalLoop()
 	except Exception as e:
 		Log("Uncaught error. Loop will restart. Details: " + str(traceback.format_exc()))

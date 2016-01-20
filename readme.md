@@ -76,3 +76,11 @@ Try with:
 55534243123456780000000000000011062000000100000000000000000000 (http://carlini.es/internet-movil-con-el-modem-3g-usb-huawei-e173u-2-en-la-raspberry-pi/)
 55534243123456780000000000000011060000000000000000000000000000 (http://www.draisberghof.de/usb_modeswitch/bb/viewtopic.php?f=4&t=1295)
 
+
+19/01/2016 21h: 791 MB
+Verificar el 20 en la mañana: 791 MB tambien
+
+Ver si hay baja de voltaje cuando modem se conecta a internet
+guardar datos cada 3 minutos, mandar datos cada 6 minutos
+hacer algo cuando el espacio en disco se empieza a acabar en el raspi
+
