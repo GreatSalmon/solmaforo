@@ -182,7 +182,7 @@ def SendMessagesInBuffer():
 	dataSent = False
 	msgs = ""
 	with open(BufferFile, 'r') as bufferfile:
-    	msgs = bufferfile.read()
+		msgs = bufferfile.read()
 
 	while not dataSent:
 		dataSent = SendData()
