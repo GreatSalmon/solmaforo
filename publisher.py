@@ -109,7 +109,8 @@ def ConnectToInternet():
 	Log("Connecting to the Internet...")
 	#check if already connected
 	if IsInternetOn():
-		Log("Already connected")
+		myMAC, myIP = GetAddresses()
+		Log("Already connected with IP: "+ myIP)
 		return
 	else:
 		#connect via 3g
