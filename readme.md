@@ -52,6 +52,11 @@ Power supply:5v
 => 500 mA
 source: www.simplytech.eu/product_info.php%3Fproducts_id%3D30+&cd=1&hl=en&ct=clnk&gl=cl
 
+Other links:
+http://raspberrypi.stackexchange.com/a/23346/38726
+
+
+
 ### MODEM INFO
 
 Para que functione el modem Huawei E3131 con chip Entel (suponiendo que ya funciona con el Huawei E173s-g Movistar):

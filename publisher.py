@@ -39,7 +39,7 @@ InetDisconnectionString = '/usr/bin/modem3g/sakis3g --sudo "disconnect"'
 
 
 def Log(msg):
-	print(msg)
+	print(msg.strip())
 	with open(LogFile, "a") as logfile:
 		logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "; " + msg + "\n")
 	
@@ -163,7 +163,7 @@ def SaveMeasurementToBuffer():
 	Log("Saving following line to buffer: ")
 	Log(msg)
 	with open(BufferFile, "a") as bufferfile:
-		bufferfile.write(msg + "\n")
+		bufferfile.write(msg + ",\n")
 
 def GetCountOfMessagesInBuffer():
 	with open(BufferFile) as f:
