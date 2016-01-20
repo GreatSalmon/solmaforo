@@ -84,3 +84,6 @@ Ver si hay baja de voltaje cuando modem se conecta a internet
 guardar datos cada 3 minutos, mandar datos cada 6 minutos
 hacer algo cuando el espacio en disco se empieza a acabar en el raspi
 
+### RASPI SD CARD CLONING
+
+http://computers.tutsplus.com/articles/how-to-clone-raspberry-pi-sd-cards-using-the-command-line-in-os-x--mac-59911

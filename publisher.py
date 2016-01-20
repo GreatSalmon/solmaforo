@@ -22,6 +22,7 @@ Port = 1883
 ClientId = "rascaberri"
 Topic = "home/test/ernestotest"
 LogFile = "/home/pi/solmaforo_logs/logs.log"
+BufferFile = "/home/pi/solmaforo_logs/buffer"
 TimeBetweenMeasure = 3 * 60
 NumberOfMeasuresBetweenSends = 2 # Must be Integer >= 1
 TimeConnectedAfterSend = 1 * 60
@@ -158,13 +159,36 @@ def GetMeasurement():
 
 def SaveMeasurementToBuffer():
 	msg = GetMeasurement()
-	# TODO
+	with open(BufferFile, "a") as bufferfile:
+		bufferfile.write(msg + "\n")
+
+def GetCountOfMessagesInBuffer():
+	with open(BufferFile) as f:
+		for i, l in enumerate(f):
+			pass
+	return i + 1
+
+def DeleteBufferFile():
+	with open(BufferFile, "w"):
+		pass
 
 def SendMessage(msg):
 	dataSent = False
 	while not dataSent:
 		dataSent = SendData(msg)
 		time.sleep(5)
+
+def SendMessagesInBuffer():
+	dataSent = False
+	msgs = ""
+	with open(BufferFile, 'r') as bufferfile:
+    	msgs = bufferfile.read()
+
+	while not dataSent:
+		dataSent = SendData()
+		time.sleep(5)
+	
+
 
 def SendFirstMessage():
 	ConnectToInternet()
@@ -177,8 +201,9 @@ def EternalLoop():
 	while True:
 		ConnectToInternet()
 		SaveMeasurementToBuffer()
-		if GetCountOfMessagesInBuffer >= NumberOfMeasuresBetweenSends:
-			SendMessages()
+		if GetCountOfMessagesInBuffer() >= NumberOfMeasuresBetweenSends:
+			SendMessagesInBuffer()
+			DeleteBufferFile()
 			if not KeepAlive:
 				time.sleep(TimeConnectedAfterSend)
 				DisconnectFromInternet()
