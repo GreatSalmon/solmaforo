@@ -3,6 +3,10 @@
 import spidev
 import time
 import os
+import traceback
+import solmaforo-utils as utils
+
+TimeBetweenMeasures = 3 * 60 # 3 minutes
 
 RefVolts = 3.3
 
@@ -10,6 +14,11 @@ RefVolts = 3.3
 spi = spidev.SpiDev()
 spi.open(0,0)
  
+def DoInitialChecks():
+	if TimeBetweenMeasures < 0:
+		raise "TimeBetweenMeasures must be positive"
+
+
 # Function to read SPI data from MCP3008 chip
 # Channel must be an integer 0-7
 def ReadChannel(channel):
@@ -36,3 +45,74 @@ def GetVolts(channel):
 	level = ReadChannel(channel)
 	volts = ConvertVolts(level,2)
 	return volts
+
+def GetTimeStampWithOffset(): #offset from UTC time, in hours
+	cmd = "date +'%z'"
+	p = os.popen(cmd)
+	line = p.read().strip()
+
+	timeOffset = int(line)/100
+
+	cmd = "date -u +'%Y-%m-%d %H:%M:%S'"
+	p = os.popen(cmd)
+	line = p.read().strip()
+
+	timestamp = line
+
+	return timestamp, timeOffset
+
+def GetUVB(channel):
+	measurementCnt = 100
+	voltsMean = 0
+	for i in range(measurementCnt):
+		volts = mcpread.GetVolts(channel)
+		voltsMean += volts
+		time.sleep(0.01)
+
+	voltsMean = voltsMean/measurementCnt
+	return voltsMean
+
+
+def GetMeasurement():
+	mac, ip = utils.GetAddresses()	
+	timestamp, timeOffset = GetTimeStampWithOffset() #offset from UTC time, in hours
+	uvb = GetUVB(channel=0)
+	msg = "%s; %s; %s; %s; %s; %s" % (ip, mac, Location, timestamp, timeOffset, uvb)
+	return msg
+
+def SaveMeasurementToBuffer():
+	msg = GetMeasurement()
+	utils.Log("Saving following line to buffer: ")
+	utils.Log(msg)
+	with open(BufferFile, "a") as bufferfile:
+		bufferfile.write(msg + ",\n")
+
+
+def EternalReader():
+	while True:
+		SaveMeasurementToBuffer()
+		time.sleep(TimeBetweenMeasures)
+
+def StartProgram():
+	try:
+		EternalReader()
+	except Exception as e:
+		utils.Log("Uncaught error. Loop will restart. Details: " + str(traceback.format_exc()))
+		StartProgram()
+
+
+# Start Program
+if __name__ == '__main__':
+	utils.Log("Starting reader program")
+	DoInitialChecks()
+	StartProgram()
+	
+
+
+
+
+
+
+
+
+

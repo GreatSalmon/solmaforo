@@ -19,14 +19,16 @@
 # Carry out specific functions when asked to by the system
 case "$1" in
   start)
-    echo "Starting publisher"
+    echo "Starting publisher and reader"
     # run application you want to start
-    /home/pi/solmaforo/publisher.py 1>>/home/pi/solmaforo_logs/outlog.log 2>>/home/pi/solmaforo_logs/errlog.err &
+    /home/pi/solmaforo/publisher.py 1>>/home/pi/solmaforo_logs/publisher_outlog.log 2>>/home/pi/solmaforo_logs/publisher_errlog.err &
+    /home/pi/solmaforo/mcpread.py 1>>/home/pi/solmaforo_logs/reader_outlog.log 2>>/home/pi/solmaforo_logs/reader_errlog.err &
     ;;
   stop)
-    echo "Stopping publisher"
+    echo "Stopping publisher and reader"
     # kill application you want to stop
     killall publisher.py
+    killall mcpread.py
     ;;
   *)
     echo "Usage: /etc/init.d/init_mqtt {start|stop}"
