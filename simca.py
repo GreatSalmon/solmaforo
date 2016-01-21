@@ -244,16 +244,17 @@ def BombeoInicial():
 def Guardar(actividad):
 	now = datetime.datetime.now()
 	f = open('/home/pi/simca/simca.log','a')
-	f.write(time.strftime(actividad + ";   " + "%H:%M:%S" + "  %d-%m-%Y" + '\r\n'))
+	line = time.strftime(actividad + ";   " + "%H:%M:%S" + "  %d-%m-%Y" + '\r\n')
+	f.write(line)
 	f.close()
+	print(line)
 	time.sleep(1)
 
 def GuardarDatos(linea):   
-	f = open("/home/pi/simca/data/" + archivo,'a')
-	# print 'guardando la siguiente linea: '
-	#Guardar(linea)
-	f.write(linea)
-	f.close()
+	with open("/home/pi/simca/data/" + archivo,'a') as f:
+		f.write(linea)
+	with open("/home/pi/simca/buffer", "a") as bufferfile:
+		bufferfile.write(linea + ",\n")
 
 def FormatearDatos(horaDecimal,detectorIR, detectorUV, monitorIR, monitorUV, tempInterna, tempExterna):
 	now = datetime.datetime.now()
@@ -360,6 +361,6 @@ if __name__ == '__main__':
 		archivo = GenerarNombreArchivo() # Genera el nombre del archivo
 		main()
 	except:
-		syslog_trace(traceback.format_exc())
-
+		Guardar(str(syslog_trace(traceback.format_exc())))
+		main()
 
