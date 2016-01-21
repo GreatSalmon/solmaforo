@@ -8,8 +8,7 @@ import solmaforo_utils as utils
 
 
 TimeBetweenMeasures = 3 * 60 # 3 minutes
-Type = "" # Solmaforo or Simca
-
+DeviceType = "" # Solmaforo or Simca
 RefVolts = 3.3
 
 
@@ -22,10 +21,10 @@ def DoInitialChecks():
 		raise "TimeBetweenMeasures must be positive"
 
 def SetTypeOfDevice():
-	Type = utils.GetConfigParam("Type")
-	utils.Log(Type)
-	if Type != "solmaforo" or Type != "simca":
-		raise "Must set Type to Solmaforo or Simca in config file"
+	DeviceType = utils.GetConfigParam("DeviceType")
+	utils.Log(DeviceType)
+	if DeviceType != "solmaforo" or DeviceType != "simca":
+		raise "Must set DeviceType to Solmaforo or Simca in config file"
 
 # Function to read SPI data from MCP3008 chip
 # Channel must be an integer 0-7
@@ -87,7 +86,7 @@ def GetMeasurementForSolmaforo():
 	location = GetConfigParam("Location")
 	uvb = GetMeasure(channel=0)
 
-	msg = "%s; %s; %s; %s; %s; %s; %s" % (ip, mac, Type, location, timestamp, timeOffset, uvb) 
+	msg = "%s; %s; %s; %s; %s; %s; %s" % (ip, mac, DeviceType, location, timestamp, timeOffset, uvb) 
 	return msg
 
 def GetMeasurementForSolmaforo():
@@ -99,12 +98,12 @@ def GetMeasurementForSolmaforo():
 	temp1 = GetMeasure(channel=2)
 	temp2 = GetMeasure(channel=3)
 
-	msg = "%s; %s; %s; %s; %s; %s; %s; %s; %s; %s" % (ip, mac, Type, location, timestamp, timeOffset, dato1,dato2,temp1,temp2) 
+	msg = "%s; %s; %s; %s; %s; %s; %s; %s; %s; %s" % (ip, mac, DeviceType, location, timestamp, timeOffset, dato1,dato2,temp1,temp2) 
 	return msg
 
 
 def SaveMeasurementToBuffer():
-	if Type == "solmaforo":
+	if DeviceType == "solmaforo":
 		msg = GetMeasurementForSolmaforo()
 	else: #simca
 		msg = GetMeasurementForSimca()
