@@ -8,7 +8,7 @@ import solmaforo_utils as utils
 
 
 TimeBetweenMeasures = 3 * 60 # 3 minutes
-global DeviceType # solmaforo or simca
+
 RefVolts = 3.3
 
 
@@ -21,6 +21,7 @@ def DoInitialChecks():
 		raise "TimeBetweenMeasures must be positive"
 
 def SetTypeOfDevice():
+	global DeviceType # solmaforo or simca
 	DeviceType = utils.GetConfigParam("DeviceType")
 	utils.Log(DeviceType)
 	if DeviceType != "solmaforo" and DeviceType != "simca":
