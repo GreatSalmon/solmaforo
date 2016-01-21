@@ -110,18 +110,21 @@ def DeleteBufferFile():
 	with open(utils.BufferFile, "w"):
 		pass
 
+def GetLinesInBuffer():
+	with open(utils.BufferFile, 'r') as bufferfile:
+		msgs = bufferfile.read()
+	return msgs
 
 def SendMessagesInBuffer():
 	msgs = ""
-	with open(utils.BufferFile, 'r') as bufferfile:
-		msgs = bufferfile.read()
+	msgs = GetLinesInBuffer();
 	if msgs != "":
 		dataSent = SendData(msgs)
 		while not dataSent:
 			dataSent = SendData(msgs)
 			ConnectToInternet()
+			msgs = GetLinesInBuffer();
 			time.sleep(5)
-
 
 def SendFirstMessage():
 	ConnectToInternet()
@@ -142,7 +145,6 @@ def EternalLoop():
 				time.sleep(TimeConnectedAfterSend)
 				DisconnectFromInternet()
 				break
-
 		time.sleep(1 * 60)
 
 
