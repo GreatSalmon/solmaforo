@@ -83,7 +83,7 @@ def GetMeasure(channel):
 def GetMeasurementForSolmaforo():
 	mac, ip = utils.GetAddresses()	
 	timestamp, timeOffset = GetTimeStampWithOffset() #offset from UTC time, in hours
-	location = GetConfigParam("Location")
+	location = utils.GetConfigParam("Location")
 	uvb = GetMeasure(channel=0)
 
 	msg = "%s; %s; %s; %s; %s; %s; %s" % (ip, mac, DeviceType, location, timestamp, timeOffset, uvb) 
@@ -92,7 +92,7 @@ def GetMeasurementForSolmaforo():
 def GetMeasurementForSimca():
 	mac, ip = utils.GetAddresses()	
 	timestamp, timeOffset = GetTimeStampWithOffset() #offset from UTC time, in hours
-	location = GetConfigParam("Location")
+	location = utils.GetConfigParam("Location")
 	dato1 = GetMeasure(channel=0)
 	dato2 = GetMeasure(channel=1)
 	temp1 = GetMeasure(channel=2)
