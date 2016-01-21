@@ -11,7 +11,7 @@ TimeBetweenMeasures = 3 * 60 # 3 minutes
 Type = "" # Solmaforo or Simca
 
 RefVolts = 3.3
-ConfigFile = "solmaforoconfig.conf"
+
 
 # Open SPI bus
 spi = spidev.SpiDev()

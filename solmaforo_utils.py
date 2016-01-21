@@ -5,6 +5,7 @@ import struct
 
 LogFile = "/home/pi/solmaforo_logs/logs.log"
 BufferFile = "/home/pi/solmaforo_logs/buffer"
+ConfigFile = "solmaforoconfig.conf"
 
 def GetConfigParam(param):
 	with open(ConfigFile, 'r') as config:
@@ -12,7 +13,7 @@ def GetConfigParam(param):
 		while line != "":
 			split = line.split('=')
 			if split[0] == param:
-				return split[1].strip().lower()
+				return split[1].strip().lower
 			line = config.readline()
 	raise "param not found: " + param
 

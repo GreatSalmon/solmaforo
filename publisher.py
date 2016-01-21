@@ -26,7 +26,7 @@ Topic = "home/test/ernestotest"
 
 NumberOfMeasuresBetweenSends = 2 # Must be Integer >= 1
 TimeConnectedAfterSend = 1 * 60
-KeepAlive = None
+KeepAlive = True
 #movistar
 #InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="12d1:1c23" USBINTERFACE="2" APN="web.tmovil.cl" APN_USER="web" APN_PASS="web"'
 
@@ -45,8 +45,11 @@ def DoInitialChecks():
 		raise "NumberOfMeasuresBetweenSends must be equal or greater than 1"
 
 def SetKeepAlive():
-	KeepAlive = utils.GetConfigParam("KeepAlive")
-	KeepAlive = (KeepAlive == "true")
+	keepalive = utils.GetConfigParam("KeepAlive")
+	if keepalive == "true":
+		KeepAlive = True
+	else:
+		KeepAlive = False
 
 
 # Checks internet connection by pinging a fast address (google)
