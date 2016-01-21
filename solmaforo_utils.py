@@ -14,7 +14,8 @@ def GetConfigParam(param):
 			split = line.split('=')
 			if split[0] == param:
 				print "param " + param + " is " + split[1].strip()
-				return split[1].strip().lower().strip()
+				ret = split[1].strip().lower()
+				return ret
 			line = config.readline()
 	raise Exception("param not found: " + param)
 
