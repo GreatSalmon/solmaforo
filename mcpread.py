@@ -23,6 +23,7 @@ def DoInitialChecks():
 
 def SetTypeOfDevice():
 	Type = utils.GetConfigParam("Type")
+	utils.Log(Type)
 	if Type != "solmaforo" or Type != "simca":
 		raise "Must set Type to Solmaforo or Simca in config file"
 
