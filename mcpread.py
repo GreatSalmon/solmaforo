@@ -103,9 +103,12 @@ def GetMeasurementForSimca():
 
 
 def SaveMeasurementToBuffer():
+	print DeviceType
 	if DeviceType == "solmaforo":
+		print "measuring for solmaforo"
 		msg = GetMeasurementForSolmaforo()
 	else: #simca
+		print "measuring for simca"
 		msg = GetMeasurementForSimca()
 
 
