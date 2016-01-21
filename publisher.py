@@ -15,7 +15,7 @@ import struct
 
 import urllib2
 
-import solmaforo-utils as utils
+import solmaforo_utils as utils
 
 #test line
 #publish.single("home/test/ernestotest", "hello test",qos=0, hostname="broker.mqttdashboard.com", port=1883, client_id="rascaberri")

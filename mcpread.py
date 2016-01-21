@@ -4,7 +4,7 @@ import spidev
 import time
 import os
 import traceback
-import solmaforo-utils as utils
+import solmaforo_utils as utils
 
 TimeBetweenMeasures = 3 * 60 # 3 minutes
 
