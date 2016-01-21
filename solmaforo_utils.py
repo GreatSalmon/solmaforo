@@ -6,6 +6,16 @@ import struct
 LogFile = "/home/pi/solmaforo_logs/logs.log"
 BufferFile = "/home/pi/solmaforo_logs/buffer"
 
+def GetConfigParam(param):
+	with open(ConfigFile, 'r') as config:
+		line = config.readline()
+		while line != "":
+			split = line.split('=')
+			if split[0] == param:
+				return split[1].strip().lower()
+			line = config.readline()
+	raise "param not found: " + param
+
 
 def get_ip_address(ifname):
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
