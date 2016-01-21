@@ -15,7 +15,7 @@ def GetConfigParam(param):
 			if split[0] == param:
 				return split[1].strip().lower()
 			line = config.readline()
-	raise "param not found: " + param
+	raise Exception("param not found: " + param)
 
 
 def get_ip_address(ifname):
