@@ -10,6 +10,7 @@ import solmaforo_utils as utils
 TimeBetweenMeasures = 3 * 60 # 3 minutes
 
 RefVolts = 3.3
+ConfigFile = "solmaforoconfig.conf"
 
 # Open SPI bus
 spi = spidev.SpiDev()
@@ -41,6 +42,14 @@ def ConvertTemp(data,places):
 	temp = ((data * 330)/float(1023))-50
 	temp = round(temp,places)
 	return temp
+
+def GetLocation():
+	with open(ConfigFile, 'r') as config:
+		line = bufferfile.readline()
+		split = line.split('=')
+		return split[1]
+
+
 
 def GetVolts(channel):
 	level = ReadChannel(channel)
@@ -77,8 +86,10 @@ def GetUVB(channel):
 def GetMeasurement():
 	mac, ip = utils.GetAddresses()	
 	timestamp, timeOffset = GetTimeStampWithOffset() #offset from UTC time, in hours
+	location = GetLocation()
 	uvb = GetUVB(channel=0)
-	msg = "%s; %s; %s; %s; %s; %s" % (ip, mac, Location, timestamp, timeOffset, uvb)
+
+	msg = "%s; %s; %s; %s; %s; %s" % (ip, mac, location, timestamp, timeOffset, uvb)
 	return msg
 
 def SaveMeasurementToBuffer():

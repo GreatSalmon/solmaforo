@@ -17,7 +17,7 @@ import solmaforo_utils as utils
 #publish.single("home/test/ernestotest", "hello test",qos=0, hostname="broker.mqttdashboard.com", port=1883, client_id="rascaberri")
 
 #params
-Location = "USACH"
+
 Host = "212.72.74.21" # corresponds to "broker.mqttdashboard.com"
 Port = 1883
 ClientId = "rascaberri"
