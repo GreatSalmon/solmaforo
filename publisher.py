@@ -26,7 +26,7 @@ Topic = "home/test/ernestotest"
 
 NumberOfMeasuresBetweenSends = 2 # Must be Integer >= 1
 TimeConnectedAfterSend = 1 * 60
-KeepAlive = False
+KeepAlive = None
 #movistar
 #InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="12d1:1c23" USBINTERFACE="2" APN="web.tmovil.cl" APN_USER="web" APN_PASS="web"'
 
@@ -43,6 +43,11 @@ InetDisconnectionString = '/usr/bin/modem3g/sakis3g --sudo "disconnect"'
 def DoInitialChecks():
 	if NumberOfMeasuresBetweenSends < 1:
 		raise "NumberOfMeasuresBetweenSends must be equal or greater than 1"
+
+def SetKeepAlive():
+	KeepAlive = utils.GetConfigParam("KeepAlive")
+	KeepAlive = (KeepAlive == "true")
+
 
 # Checks internet connection by pinging a fast address (google)
 # Must find another way if this consumes to much data
@@ -145,8 +150,10 @@ def EternalLoop():
 		time.sleep(1 * 60)
 
 
+
 def StartProgram():
 	DoInitialChecks()
+	SetKeepAlive()
 	try:
 		SendFirstMessage()
 
