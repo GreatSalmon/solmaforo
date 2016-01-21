@@ -99,6 +99,7 @@ def DisconnectFromInternet():
 
 
 def GetCountOfMessagesInBuffer():
+	i = -1
 	with open(utils.BufferFile) as f:
 		for i, l in enumerate(f):
 			pass
@@ -114,11 +115,12 @@ def SendMessagesInBuffer():
 	msgs = ""
 	with open(utils.BufferFile, 'r') as bufferfile:
 		msgs = bufferfile.read()
-	dataSent = SendData(msgs)
-	while not dataSent:
+	if msgs != "":
 		dataSent = SendData(msgs)
-		ConnectToInternet()
-		time.sleep(5)
+		while not dataSent:
+			dataSent = SendData(msgs)
+			ConnectToInternet()
+			time.sleep(5)
 
 
 def SendFirstMessage():
