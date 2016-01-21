@@ -89,7 +89,7 @@ def GetMeasurementForSolmaforo():
 	msg = "%s; %s; %s; %s; %s; %s; %s" % (ip, mac, DeviceType, location, timestamp, timeOffset, uvb) 
 	return msg
 
-def GetMeasurementForSolmaforo():
+def GetMeasurementForSimca():
 	mac, ip = utils.GetAddresses()	
 	timestamp, timeOffset = GetTimeStampWithOffset() #offset from UTC time, in hours
 	location = GetConfigParam("Location")
