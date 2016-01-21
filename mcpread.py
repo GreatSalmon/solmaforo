@@ -8,7 +8,7 @@ import solmaforo_utils as utils
 
 
 TimeBetweenMeasures = 3 * 60 # 3 minutes
-DeviceType = "" # Solmaforo or Simca
+global DeviceType = None # Solmaforo or Simca
 RefVolts = 3.3
 
 
