@@ -60,9 +60,6 @@ def IsInternetOn():
 	return False
 
 
-
-
-
 def SendData(msg):
 	success = False
 	utils.Log("Sending Message: " + msg)
