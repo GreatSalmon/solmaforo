@@ -45,7 +45,7 @@ def ConvertTemp(data,places):
 
 def GetLocation():
 	with open(ConfigFile, 'r') as config:
-		line = bufferfile.readline()
+		line = config.readline()
 		split = line.split('=')
 		return split[1]
 
