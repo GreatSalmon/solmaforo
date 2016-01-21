@@ -25,7 +25,7 @@ def GetAddresses():
 	#If it doesn't work, get Local ethernet address
 	try:
 		myMAC = open('/sys/class/net/eth0/address').read().strip()
-		myIP = get_ip_address("ppp0")
+		myIP = get_ip_address("eth0")
 	except IOError as e:
 		Log(str(e))
 		try:
