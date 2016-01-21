@@ -66,7 +66,7 @@ def GetUVB(channel):
 	measurementCnt = 100
 	voltsMean = 0
 	for i in range(measurementCnt):
-		volts = mcpread.GetVolts(channel)
+		volts = GetVolts(channel)
 		voltsMean += volts
 		time.sleep(0.01)
 
