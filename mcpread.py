@@ -23,7 +23,7 @@ def DoInitialChecks():
 def SetTypeOfDevice():
 	DeviceType = utils.GetConfigParam("DeviceType")
 	utils.Log(DeviceType)
-	if DeviceType != "solmaforo" or DeviceType != "simca":
+	if DeviceType != "solmaforo" and DeviceType != "simca":
 		raise "Must set DeviceType to Solmaforo or Simca in config file"
 
 # Function to read SPI data from MCP3008 chip
