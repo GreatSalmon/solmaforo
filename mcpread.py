@@ -96,7 +96,7 @@ def SaveMeasurementToBuffer():
 	msg = GetMeasurement()
 	utils.Log("Saving following line to buffer: ")
 	utils.Log(msg)
-	with open(BufferFile, "a") as bufferfile:
+	with open(utils.BufferFile, "a") as bufferfile:
 		bufferfile.write(msg + ",\n")
 
 

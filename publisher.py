@@ -23,7 +23,6 @@ Port = 1883
 ClientId = "rascaberri"
 Topic = "home/test/ernestotest"
 
-BufferFile = "/home/pi/solmaforo_logs/buffer"
 
 NumberOfMeasuresBetweenSends = 2 # Must be Integer >= 1
 TimeConnectedAfterSend = 1 * 60
@@ -100,20 +99,20 @@ def DisconnectFromInternet():
 
 
 def GetCountOfMessagesInBuffer():
-	with open(BufferFile) as f:
+	with open(utils.BufferFile) as f:
 		for i, l in enumerate(f):
 			pass
 	utils.Log("Number of lines in buffer: " + str(i+1))
 	return i + 1
 
 def DeleteBufferFile():
-	with open(BufferFile, "w"):
+	with open(utils.BufferFile, "w"):
 		pass
 
 
 def SendMessagesInBuffer():
 	msgs = ""
-	with open(BufferFile, 'r') as bufferfile:
+	with open(utils.BufferFile, 'r') as bufferfile:
 		msgs = bufferfile.read()
 	dataSent = SendData(msgs)
 	while not dataSent:

@@ -4,6 +4,8 @@ import fcntl
 import struct
 
 LogFile = "/home/pi/solmaforo_logs/logs.log"
+BufferFile = "/home/pi/solmaforo_logs/buffer"
+
 
 def get_ip_address(ifname):
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
