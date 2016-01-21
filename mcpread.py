@@ -47,7 +47,8 @@ def GetLocation():
 	with open(ConfigFile, 'r') as config:
 		line = config.readline()
 		split = line.split('=')
-		return split[1]
+		loc = split[1].strip()
+		return loc
 
 
 
