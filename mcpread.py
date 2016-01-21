@@ -6,6 +6,7 @@ import os
 import traceback
 import solmaforo_utils as utils
 
+
 TimeBetweenMeasures = 3 * 60 # 3 minutes
 
 RefVolts = 3.3

@@ -1,8 +1,7 @@
 #! /usr/bin/python
 import os, sys
-import datetime
 import time
-import random
+
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 import pdb
@@ -10,10 +9,7 @@ import traceback
 import mcpread
 
 import socket
-import fcntl
-import struct
 
-import urllib2
 
 import solmaforo_utils as utils
 
@@ -64,13 +60,7 @@ def IsInternetOn():
 		pass
 	return False
 
-def get_ip_address(ifname):
-	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	return socket.inet_ntoa(fcntl.ioctl(
-		s.fileno(),
-		0x8915,  # SIOCGIFADDR
-		struct.pack('256s', ifname[:15])
-	)[20:24])
+
 
 
 
