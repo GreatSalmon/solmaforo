@@ -85,6 +85,8 @@ def LeerConf(variable):
 	p = os.popen("grep '" + variable + "' /home/pi/simca/conf.dat")
 	linea = p.readlines()
 	split = linea[0].split("=")
+	if split[1] == "":
+		raise Exception("variable " + variable + " no encontrada")
 	return split[1]
 
 def BorrarArchivo():
@@ -287,7 +289,7 @@ def FormatearDatos(horaDecimal,detectorIR, detectorUV, monitorIR, monitorUV, tem
 	return datos
   
 def ComenzarSimca():
-	BorrarArchivo()
+	#BorrarArchivo()
 	Guardar("Comenzando Simca. Si desea terminar el programa, lance killsimca.py")
 	Guardar("Archivo = " + archivo)
 	#print "antes de leer temperatura"
