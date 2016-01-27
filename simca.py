@@ -193,7 +193,9 @@ def LeerTempInterna():
 	# lee el valor de la temp interna
 	voltsTemp = ReadVoltsFromMCP(2)
 	if voltsTemp > 0:
-		 R_ntc_int = (V_ti() / voltsTemp)*R_aux() - R_aux()
+		 #R_ntc_int = (V_ti() / voltsTemp)*R_aux() - R_aux()
+
+		 R_ntc_int = (voltsTemp/V_ti)*R_aux() - R_aux()
 		 if R_ntc_int > 0:
 			  T_int = (1 / (math.log( R_ntc_int/R_0(),10) / B_0() + 1/298.5) - 273.5)
 		 else:

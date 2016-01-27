@@ -5,7 +5,7 @@ import struct
 
 LogFile = "/home/pi/solmaforo_logs/logs.log"
 BufferFile = "/home/pi/solmaforo_logs/buffer"
-ConfigFile = "solmaforoconfig.conf"
+ConfigFile = "/home/pi/solmaforo/solmaforoconfig.conf"
 
 def GetConfigParam(param):
 	with open(ConfigFile, 'r') as config:
@@ -13,7 +13,6 @@ def GetConfigParam(param):
 		while line != "":
 			split = line.split('=')
 			if split[0] == param:
-
 				ret = split[1].strip().lower()
 				return ret
 			line = config.readline()
@@ -37,13 +36,13 @@ def GetAddresses():
 	#Try to get PPP0 (mobile) address
 	#If it doesn't work, get Local ethernet address
 	try:
-		myMAC = open('/sys/class/net/eth0/address').read().strip()
-		myIP = get_ip_address("eth0")
+		myMAC = open('/sys/class/net/wwan0/address').read().strip()
+		myIP = get_ip_address("ppp0")
 	except IOError as e:
 		Log(str(e))
 		try:
-			myMAC = open('/sys/class/net/wwan0/address').read().strip()
-			myIP = get_ip_address("ppp0")
+			myMAC = open('/sys/class/net/eth0/address').read().strip()
+			myIP = get_ip_address("eth0")
 		except IOError as e:
 			Log(str(e))
 			myMAC = "No MAC"
