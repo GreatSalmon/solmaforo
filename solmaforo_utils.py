@@ -36,16 +36,20 @@ def GetAddresses():
 	#Try to get PPP0 (mobile) address
 	#If it doesn't work, get Local ethernet address
 	try:
-		myMAC = open('/sys/class/net/wwan0/address').read().strip()
 		myIP = get_ip_address("ppp0")
+		myMAC = open('/sys/class/net/wwan0/address').read().strip()
 	except IOError as e:
 		Log(str(e))
 		try:
+			myIP = get_ip_address("ppp0")
 			myMAC = open('/sys/class/net/eth0/address').read().strip()
-			myIP = get_ip_address("eth0")
 		except IOError as e:
-			Log(str(e))
-			myMAC = "No MAC"
-			myIP = "No IP"
+			try:
+				myIP = get_ip_address("eth0")
+				myMAC = open('/sys/class/net/eth0/address').read().strip()
+			except IOError as e:
+				Log(str(e))
+				myMAC = "No MAC"
+				myIP = "No IP"
 
 	return myMAC, myIP
