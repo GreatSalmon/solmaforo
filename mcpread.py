@@ -69,7 +69,7 @@ def GetTimeStampWithOffset(): #offset from UTC time, in hours
 
 	return timestamp, timeOffset
 
-def GetMeasure(channel):
+def GetMeasureFromMCP(channel):
 	measurementCnt = 100
 	voltsMean = 0
 	for i in range(measurementCnt):
@@ -85,7 +85,7 @@ def GetMeasurementForSolmaforo():
 	mac, ip = utils.GetAddresses()	
 	timestamp, timeOffset = GetTimeStampWithOffset() #offset from UTC time, in hours
 	location = utils.GetConfigParam("Location")
-	uvb = GetMeasure(channel=0)
+	uvb = GetMeasureFromMCP(channel=0)
 
 	msg = "%s; %s; %s; %s; %s; %s; %s" % (ip, mac, DeviceType, location, timestamp, timeOffset, uvb) 
 	return msg
@@ -94,34 +94,40 @@ def GetMeasurementForSimca():
 	mac, ip = utils.GetAddresses()	
 	timestamp, timeOffset = GetTimeStampWithOffset() #offset from UTC time, in hours
 	location = utils.GetConfigParam("Location")
-	dato1 = GetMeasure(channel=0)
-	dato2 = GetMeasure(channel=1)
-	temp1 = GetMeasure(channel=2)
-	temp2 = GetMeasure(channel=3)
+	dato1 = GetMeasureFromMCP(channel=0)
+	dato2 = GetMeasureFromMCP(channel=1)
+	temp1 = GetMeasureFromMCP(channel=2)
+	temp2 = GetMeasureFromMCP(channel=3)
 
 	msg = "%s; %s; %s; %s; %s; %s; %s; %s; %s; %s" % (ip, mac, DeviceType, location, timestamp, timeOffset, dato1,dato2,temp1,temp2) 
 	return msg
 
 
-def SaveMeasurementToBuffer():
-
-	if DeviceType == "solmaforo":
-
-		msg = GetMeasurementForSolmaforo()
-	else: #simca
-
-		msg = GetMeasurementForSimca()
-
-
+def SaveMeasurementToBuffer(msg):
 	utils.Log("Saving following line to buffer: ")
 	utils.Log(msg)
 	with open(utils.BufferFile, "a") as bufferfile:
 		bufferfile.write(msg + ",\n")
 
+def SaveMeasurementToPermanentFile(msg):
+	utils.Log("Saving line to permanent file.")
+	with open(utils.PermanentFile, "a") as bufferfile:
+		bufferfile.write(msg + ",\n")
+
+
+def GetMeasurement():
+	msg = ""
+	if DeviceType == "solmaforo":
+		msg = GetMeasurementForSolmaforo()
+	else: #simca
+		msg = GetMeasurementForSimca()
+	return msg
 
 def EternalReader():
 	while True:
-		SaveMeasurementToBuffer()
+		msg = GetMeasurement()
+		SaveMeasurementToBuffer(msg)
+		SaveMeasurementToPermanentFile(msg)
 		time.sleep(TimeBetweenMeasures)
 
 def StartProgram():

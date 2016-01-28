@@ -5,6 +5,7 @@ import struct
 
 LogFile = "/home/pi/solmaforo_logs/logs.log"
 BufferFile = "/home/pi/solmaforo_logs/buffer"
+PermanentFile = "/home/pi/solmaforo_logs/data.dat"
 ConfigFile = "/home/pi/solmaforo/solmaforoconfig.conf"
 
 def GetConfigParam(param):
