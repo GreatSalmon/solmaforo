@@ -114,6 +114,8 @@ def SaveMeasurementToPermanentFile(msg):
 	with open(utils.PermanentFile, "a") as bufferfile:
 		bufferfile.write(msg + ",\n")
 
+		
+
 
 def GetMeasurement():
 	msg = ""
