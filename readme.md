@@ -92,3 +92,6 @@ hacer algo cuando el espacio en disco se empieza a acabar en el raspi
 ### RASPI SD CARD CLONING
 
 http://computers.tutsplus.com/articles/how-to-clone-raspberry-pi-sd-cards-using-the-command-line-in-os-x--mac-59911
+
+### Para hacer funcionar el modem ZTE MF626
+https://www.bentasker.co.uk/documentation/linux/19-installing-and-using-a-t-mobile-zte-mf626-usb-3g-mobile-broadband-dongle-under-linux
