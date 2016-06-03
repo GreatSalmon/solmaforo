@@ -95,3 +95,11 @@ http://computers.tutsplus.com/articles/how-to-clone-raspberry-pi-sd-cards-using-
 
 ### Para hacer funcionar el modem ZTE MF626
 https://www.bentasker.co.uk/documentation/linux/19-installing-and-using-a-t-mobile-zte-mf626-usb-3g-mobile-broadband-dongle-under-linux
+
+### Sakis3g connections strings
+
+#CLARO COLOMBIA
+InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="19d2:0031" USBINTERFACE="2" APN="internet.comcel.com.co" APN_USER="comcel" APN_PASS="comcel"'
+
+#entel Chile
+#InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="12d1:1506" USBINTERFACE="0" APN="imovil.entelpcs.cl" APN_USER="web" APN_PASS="web"'
