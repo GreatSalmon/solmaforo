@@ -149,7 +149,7 @@ def EternalLoop():
 			if not KeepAlive:
 				time.sleep(TimeConnectedAfterSend)
 				DisconnectFromInternet()
-				break
+				continue
 		time.sleep(1 * 60)
 
 
