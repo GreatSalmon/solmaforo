@@ -9,3 +9,8 @@ A line of data is created with a timestamp and the current UV level.
 Data is sent to the Internet using an Ethernet cable (Raspi B+), or a Wifi or 3G dongle.
 
 The data is sent using the MQTT protocol. The data arrives to a web server (see my other project, clientemqtt)
+
+
+![alt tag](http://www.flickr.com/photos/leliavalduga/7631574914/)
+
+
