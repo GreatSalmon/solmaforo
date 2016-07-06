@@ -11,6 +11,8 @@ Data is sent to the Internet using an Ethernet cable (Raspi B+), or a Wifi or 3G
 The data is sent using the MQTT protocol. The data arrives to a web server (see my other project, clientemqtt)
 
 
-![alt tag](http://www.flickr.com/photos/leliavalduga/7631574914/)
+![alt tag](http://www.somosbarrick.com/wp-content/uploads/2012/08/solmaforo.jpg)
+
+
 
 
