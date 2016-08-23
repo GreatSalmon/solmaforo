@@ -115,6 +115,8 @@ def DeleteBufferFile():
 		pass
 
 def GetLinesInBuffer():
+	if not os.path.exists(utils.BufferFile):
+		return ""
 	with open(utils.BufferFile, 'r') as bufferfile:
 		msgs = bufferfile.read()
 	return msgs
