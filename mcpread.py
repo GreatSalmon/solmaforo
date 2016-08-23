@@ -7,7 +7,7 @@ import traceback
 import solmaforo_utils as utils
 
 
-TimeBetweenMeasures = 3 * 60 # 3 minutes
+TimeBetweenMeasures = 5 * 60 # 5 minutes
 
 RefVolts = 3.3
 
@@ -85,8 +85,11 @@ def GetMeasurementForSolmaforo():
 	mac, ip = utils.GetAddresses()	
 	timestamp, timeOffset = GetTimeStampWithOffset() #offset from UTC time, in hours
 	location = utils.GetConfigParam("Location")
-	uvb = GetMeasureFromMCP(channel=0)
-
+	gain = float(utils.GetConfigParam("Gain_uv"))
+	offset = float(utils.GetConfigParam("Offset_uv"))	
+	uvb = (GetMeasureFromMCP(channel=0) - offset) * gain
+        if uvb < 0:
+             uvb = 0
 	msg = "%s; %s; %s; %s; %s; %s; %s" % (ip, mac, DeviceType, location, timestamp, timeOffset, uvb) 
 	return msg
 
@@ -114,7 +117,9 @@ def SaveMeasurementToPermanentFile(msg):
 	with open(utils.PermanentFile, "a") as bufferfile:
 		bufferfile.write(msg + ",\n")
 
-		
+        statinfo = os.stat(utils.PermanentFile)
+        if statinfo.st_size > 500000000:
+                os.remove(utils.PermanentFile)
 
 
 def GetMeasurement():

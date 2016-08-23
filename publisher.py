@@ -18,19 +18,18 @@ import solmaforo_utils as utils
 
 #params
 
-Host = "212.72.74.21" # corresponds to "broker.mqttdashboard.com"
-Port = 1883
-ClientId = "rascaberri"
-Topic = "home/test/ernestotest"
-
+Host = "m12.cloudmqtt.com"
+Port = 19701
+ClientId = "melgar"
+Topic = "idelect"
+Auth = {"username":"idelect1", "password":"idelect1"} # Idelect1 es Melgar
 
 NumberOfMeasuresBetweenSends = 2 # Must be Integer >= 1
-TimeConnectedAfterSend = 1 * 60
-#movistar
-#InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="12d1:1c23" USBINTERFACE="2" APN="web.tmovil.cl" APN_USER="web" APN_PASS="web"'
+TimeConnectedAfterSend = 1 * 30
+#CLARO COLOMBIA
+InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="19d2:0031" USBINTERFACE="2" APN="internet.comcel.com.co" APN_USER="comcel" APN_PASS="comcel"'
 
-#entel
-InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="12d1:1506" USBINTERFACE="0" APN="imovil.entelpcs.cl" APN_USER="web" APN_PASS="web"'
+
 InetDisconnectionString = '/usr/bin/modem3g/sakis3g --sudo "disconnect"'
 # end params
 
@@ -72,7 +71,7 @@ def SendData(msg):
 	success = False
 	utils.Log("Sending Message: " + msg)
 	try:
-		publish.single(Topic, msg,qos=0, hostname=Host, port=Port, client_id=ClientId)
+		publish.single(Topic, msg,qos=0, hostname=Host, port=Port, client_id=ClientId,auth=Auth)
 
 		utils.Log("Message sent")
 		success = True	

@@ -1,3 +1,4 @@
+import os
 import datetime
 import socket
 import fcntl
@@ -32,13 +33,22 @@ def Log(msg):
 	print(msg.strip())
 	with open(LogFile, "a") as logfile:
 		logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "; " + msg + "\n")
+	statinfo = os.stat(LogFile)
+	if statinfo.st_size > 100000000:
+		os.remove(LogFile)
+
+
 
 def GetAddresses():
 	#Try to get PPP0 (mobile) address
 	#If it doesn't work, get Local ethernet address
 	try:
 		myIP = get_ip_address("ppp0")
-		myMAC = open('/sys/class/net/wwan0/address').read().strip()
+		try:
+			myMAC = open('/sys/class/net/wwan0/address').read().strip()
+		except:
+			myMAC = "None"
+
 	except IOError as e:
 		Log(str(e))
 		try:
