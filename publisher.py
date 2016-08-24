@@ -27,7 +27,7 @@ Auth = {"username":"idelect1", "password":"idelect1"} # Idelect1 es Melgar
 NumberOfMeasuresBetweenSends = 2 # Must be Integer >= 1
 TimeConnectedAfterSend = 1 * 30
 #CLARO COLOMBIA
-InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="19d2:0031" USBINTERFACE="2" APN="internet.comcel.com.co" APN_USER="comcel" APN_PASS="comcel"'
+#InetConnectionString = '/usr/bin/modem3g/sakis3g --sudo "connect" USBMODEM="19d2:0031" USBINTERFACE="2" APN="internet.comcel.com.co" APN_USER="comcel" APN_PASS="comcel"'
 
 
 InetDisconnectionString = '/usr/bin/modem3g/sakis3g --sudo "disconnect"'
@@ -91,7 +91,10 @@ def ConnectToInternet():
 		return
 	else:
 		#connect via 3g
-		p = os.popen(InetConnectionString)
+
+		internet_connect_string=utils.GetConfigParam("InternetConnectionString")
+
+		p = os.popen(internet_connect_string)
 		line = p.read()
 		utils.Log(line)
 
