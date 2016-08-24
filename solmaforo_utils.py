@@ -15,7 +15,7 @@ def GetConfigParam(param):
 		while line != "":
 			split = line.split('=')
 			if split[0] == param:
-				ret = split[1].strip().lower()
+				ret = line.find('=').strip()
 				return ret
 			line = config.readline()
 	raise Exception("param not found: " + param)
