@@ -22,7 +22,7 @@ def DoInitialChecks():
 
 def SetTypeOfDevice():
 	global DeviceType # solmaforo or simca
-	DeviceType = utils.GetConfigParam("DeviceType")
+	DeviceType = utils.GetConfigParam("DeviceType").lower()
 	utils.Log(DeviceType)
 	if DeviceType != "solmaforo" and DeviceType != "simca":
 		raise "Must set DeviceType to Solmaforo or Simca in config file"
